@@ -1,8 +1,28 @@
 def to_phred33(char: str) -> int:
+    """Конвертация ASCII-символа в качество Phred-33."""
     return ord(char) - 33
 
 
 def sliding_window_triming(file_from: str, file_to: str, sliding_window_size=5, trimming_quality=30) -> None:
+    """
+    Фильтрация прочтений методом скользящего окна
+
+    Алгоритм находит первое окно, среднее качество которого ниже целевого,
+    затем выполняет откат для удаления низкокачественного хвоста.
+    Обновляет метаданные (length=) в заголовках FASTQ.
+
+    :param file_from : str
+        Путь к исходному FASTQ файлу.
+    :param file_to: str
+        Путь для записи обработанного FASTQ файла.
+    :param sliding_window_size: int, optional
+        Ширина скользящего окна (по умолчанию 5).
+    :param trimming_quality: int, optional
+        Пороговое значение среднего качества для окна (по умолчанию 30).
+    :return: None
+        Функция не возвращает значения, но записывает результат в file_to
+        и выводит статистику в консоль.
+    """
     reads_remaining = 0
     with open(file_from, 'r') as file, open(file_to, 'w') as file2:
         cur_line = 0
@@ -66,7 +86,17 @@ def sliding_window_triming(file_from: str, file_to: str, sliding_window_size=5, 
 
 
 file_name = input("Введите пожалуйста ТОЧНОЕ НАЗВАНИЕ файла для анализа:\n")
+
+# во избежание ошибки FileNotFoundError, обернул смысловой блок кода в try-except
 try:
+    """
+    Сбор базовых метрик (Task 1, 2, 3):
+    Общее число прочтений;
+    Минимальная, максимальная, а также средняя длина прочтения
+
+    GC-состав прочтений
+    Среднее значение качества по шкале Phred для всех прочтений для позиции 10
+    """
     with open(file_name, 'r') as file:
         cur_line = 0
         max_len = 0
