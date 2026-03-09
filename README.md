@@ -17,7 +17,7 @@
    - Расчет общего GC-состава (%).
    - Вычисление среднего значения качества (Phred-33) на заданных позициях нуклеотидов.
 2. **Quality Trimming (SLIDINGWINDOW):**
-   - Точная реализация алгоритма скользящего окна. Исходный код был написан с опорой на Java-исходники оригинального инструмента [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic).
+   - Точная реализация алгоритма скользящего окна. Исходный код был написан с опорой на Java-исходники оригинального инструмента [Trimmomatic](https://github.com/usadellab/Trimmomatic/blob/main/src/main/java/org/usadellab/trimmomatic/trim/SlidingWindowTrimmer.java).
    - Поддерживает динамическое обновление метаданных (`length=...`) в заголовках FASTQ после обрезки последовательности.
 3. **Length Filtering (MINLEN):**
    - Фильтрация прочтений, длина которых после тримминга упала ниже заданного порога.
